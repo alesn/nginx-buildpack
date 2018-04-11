@@ -2,7 +2,7 @@
 language: nginx
 default_versions:
 - name: nginx
-  version: 1.13.x
+  version: 1.13.11-with-geoip
 version_lines:
   '': 1.13.x
   mainline: 1.13.x
@@ -31,6 +31,12 @@ dependencies:
   version: 1.13.11
   uri: https://buildpacks.cloudfoundry.org/dependencies/nginx/nginx-1.13.11-linux-x64-185f2aec.tgz
   sha256: 185f2aec1ba79679421496eeaf30491f9f31e926341609a643022588df5c78b6
+  cf_stacks:
+  - cflinuxfs2
+- name: nginx
+  version: 1.13.11-with-geoip
+  uri: https://github.com/alesn/nginx-buildpack/blob/develop/dependencies/nginx-with-geoip-1.13.11-linux-x64.tgz
+  sha256: 24b6527bb78aac7f31f194ec2928737ff58cc1739f437ec355b34114eb32fe8c
   cf_stacks:
   - cflinuxfs2
 pre_package: scripts/build.sh
