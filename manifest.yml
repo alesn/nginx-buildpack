@@ -42,7 +42,7 @@ dependencies:
 - name: nginx
   version: 1.13.12
   uri: https://github.com/alesn/nginx-buildpack/raw/develop/dependencies/nginx-with-geoip-1.13.12-linux-x64.tgz
-  sha256: cae84df1884f380f829962dce841d787ef3897cfb06b6febb0a76e28fbc932e4
+  sha256: 420c7f5b27301d1ccd69a445ccc1392a083417c7bbb1cb1a7b63df56015b75d0
   cf_stacks:
   - cflinuxfs2
 pre_package: scripts/build.sh
