@@ -18,6 +18,32 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		app = nil
 	})
 
+	Context("with no specified pid", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "without_pid"))
+		})
+
+		It("Deploys successfully", func() {
+			PushAppAndConfirm(app)
+
+			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
+		})
+	})
+
+	Context("with a specified pid", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "with_pid"))
+		})
+
+		It("Deploys successfully", func() {
+			PushAppAndConfirm(app)
+
+			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
+		})
+	})
+
 	Context("with no specified version", func() {
 		BeforeEach(func() {
 			app = cutlass.New(filepath.Join(bpDir, "fixtures", "unspecified_version"))
@@ -26,7 +52,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Uses latest mainline nginx", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`No nginx version specified - using mainline => 1.13.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`No nginx version specified - using mainline => 1.15.`))
 			Eventually(app.Stdout.String).ShouldNot(ContainSubstring(`Requested nginx version:`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
@@ -42,7 +68,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Logs nginx buildpack version", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: mainline => 1.13.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: mainline => 1.15.`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
 			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
@@ -57,7 +83,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Logs nginx buildpack version", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: stable => 1.12.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: stable => 1.14.`))
 			Eventually(app.Stdout.String).Should(ContainSubstring(`Warning: usage of "stable" versions of NGINX is discouraged in most cases by the NGINX team.`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
@@ -65,15 +91,15 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		})
 	})
 
-	Context("with an nginx app specifying 1.12.x", func() {
+	Context("with an nginx app specifying 1.14.x", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "1_12_x"))
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "1_14_x"))
 		})
 
 		It("Logs nginx buildpack version", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: 1.12.x => 1.12.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: 1.14.x => 1.14.`))
 			Eventually(app.Stdout.String).Should(ContainSubstring(`Warning: usage of "stable" versions of NGINX is discouraged in most cases by the NGINX team.`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
@@ -86,10 +112,10 @@ var _ = Describe("CF Nginx Buildpack", func() {
 			app = cutlass.New(filepath.Join(bpDir, "fixtures", "unavailable_version"))
 		})
 
-		It("Logs nginx buildpack version", func() {
+		It("Logs nginx buildpack versions", func() {
 			Expect(app.Push()).ToNot(Succeed())
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Available versions: mainline, stable, 1.12.x, 1.13.x`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Available versions: mainline, stable, 1.14.x, 1.15.x`))
 		})
 	})
 
@@ -100,6 +126,36 @@ var _ = Describe("CF Nginx Buildpack", func() {
 
 		It("Pushes the app successfully", func() {
 			PushAppAndConfirm(app)
+		})
+	})
+
+	Context("an app without access logging", func() {
+		const warning = `Warning: access logging is turned off in your nginx.conf file, this may make your app difficult to debug.`
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "no_logging"))
+			app.Buildpacks = []string{"nginx_buildpack"}
+		})
+		AfterEach(func() {
+			app.Destroy()
+		})
+
+		It("Logs a warning", func() {
+			Expect(app.Push()).To(Succeed())
+
+			Eventually(app.Stdout.String).Should(ContainSubstring(warning))
+		})
+	})
+
+	Context("an OpenResty app", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "openresty"))
+		})
+
+		It("Deploys successfully", func() {
+			PushAppAndConfirm(app)
+
+			Expect(app.GetBody("/")).To(ContainSubstring("<p>hello, world</p>"))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
 		})
 	})
 })

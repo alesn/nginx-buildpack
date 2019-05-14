@@ -20,23 +20,25 @@ var _ = Describe("pushing an app a second time", func() {
 
 	BeforeEach(func() {
 		if cutlass.Cached {
-			Skip("but running cached tests")
+			Skip("running uncached tests")
 		}
 
 		app = cutlass.New(filepath.Join(bpDir, "fixtures", "mainline"))
+		app.Buildpacks = []string{"nginx_buildpack"}
 	})
 
-	DownloadRegexp := `Download \[.*/nginx\-[\d\.]+\-linux-x64-[0-9a-f]+\.tgz\]`
-	CopyRegexp := `Copy \[.*/nginx\-[\d\.]+\-linux-x64-[0-9a-f]+\.tgz\]`
+	Regexp := `\[.*/nginx\-[\d\.]+\-linux\-x64\-(cflinuxfs.*-)?[\da-f]+\.tgz\]`
+	DownloadRegexp := "Download " + Regexp
+	CopyRegexp := "Copy " + Regexp
 
 	It("uses the cache for manifest dependencies", func() {
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(MatchRegexp(DownloadRegexp))
+		Eventually(app.Stdout.String).Should(MatchRegexp(DownloadRegexp))
 		Expect(app.Stdout.String()).ToNot(MatchRegexp(CopyRegexp))
 
 		app.Stdout.Reset()
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(MatchRegexp(CopyRegexp))
+		Eventually(app.Stdout.String).Should(MatchRegexp(CopyRegexp))
 		Expect(app.Stdout.String()).ToNot(MatchRegexp(DownloadRegexp))
 	})
 })

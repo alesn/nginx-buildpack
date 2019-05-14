@@ -1,4 +1,4 @@
-# Cloud Foundry Experimental Nginx Buildpack
+# Cloud Foundry NGINX Buildpack
 
 [![CF Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://cloudfoundry.slack.com/messages/buildpacks/)
 
@@ -7,10 +7,7 @@ A Cloud Foundry [buildpack](http://docs.cloudfoundry.org/buildpacks/) for apps r
 
 ### Buildpack User Documentation
 
-To use this buildpack, you will need to include an `nginx.conf` file in your
-app. You can see sample apps in the fixtures directory,
-[mainline](https://github.com/cloudfoundry/nginx-buildpack/tree/master/fixtures/mainline),
-including a sample `nginx.conf` file.
+Official buildpack documentation can be found at [Nginx buildpackdocs](https://docs.cloudfoundry.org/buildpacks/nginx/index.html)
 
 ### Building the Buildpack
 
@@ -32,7 +29,7 @@ To build this buildpack, run the following command from the buildpack's director
 1. Build the buildpack
 
     ```bash
-    buildpack-packager build [ --cached=(true|false) ]
+    buildpack-packager build [ -cached=(true|false) ] -any-stack
     ```
 
 1. Use in Cloud Foundry
@@ -87,6 +84,3 @@ Open an issue on this project
 
 The project backlog is on [Pivotal Tracker](https://www.pivotaltracker.com/projects/1042066)
 
-## Disclaimer
-
-This buildpack is experimental and not yet intended for production use.

@@ -23,7 +23,7 @@ func init() {
 
 var _ = SynchronizedBeforeSuite(func() []byte {
 	// Run once
-	return bratshelper.InitBpData().Marshal()
+	return bratshelper.InitBpData(os.Getenv("CF_STACK"), ApiHasStackAssociation()).Marshal()
 }, func(data []byte) {
 	// Run on all nodes
 	bratshelper.Data.Unmarshal(data)
@@ -52,7 +52,13 @@ func CopyBrats(version string) *cutlass.App {
 	dir, err := cutlass.CopyFixture(filepath.Join(bratshelper.Data.BpDir, "fixtures", "brats"))
 	Expect(err).ToNot(HaveOccurred())
 
-	Expect(libbuildpack.NewYAML().Write(filepath.Join(dir, "nginx.yml"), map[string]string{"version": version})).To(Succeed())
+	Expect(libbuildpack.NewYAML().Write(filepath.Join(dir, "buildpack.yml"), map[string]map[string]string{"nginx": {"version": version}})).To(Succeed())
 
 	return cutlass.New(dir)
+}
+
+func ApiHasStackAssociation() bool {
+	supported, err := cutlass.ApiGreaterThan("2.113.0")
+	Expect(err).NotTo(HaveOccurred())
+	return supported
 }
