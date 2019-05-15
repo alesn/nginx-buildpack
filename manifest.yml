@@ -55,7 +55,7 @@ dependencies:
 - name: nginx
   version: 1.16.0-with-geoip
   uri: https://github.com/alesn/nginx-buildpack/raw/develop/dependencies/nginx-with-geoip-1.16.0-linux-x64.tgz
-  sha256: 5a7dabad0bcffce659cbbf4c54bccdf651dce2549ee4c4d23f3854a1d82242fe
+  sha256: 3dc8dde23c52790b7c6d54bf6c9a3d2438aef90a5c800eb95bc6bab5a65bc98c
   cf_stacks:
   - cflinuxfs3
   source: http://nginx.org/download/nginx-1.16.0.tar.gz
