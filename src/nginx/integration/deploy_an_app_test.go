@@ -18,6 +18,21 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		app = nil
 	})
 
+	Context("with templated json return value", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "templated_env_vars"))
+		})
+
+		It("Deploys successfully", func() {
+			env := `'{ "abcd": 12345 }{ \'ef\' : "ab" }'`
+			app.SetEnv("OVERRIDE", env)
+			PushAppAndConfirm(app)
+
+			Expect(app.GetBody("/test")).To(ContainSubstring(`{ "abcd": 12345 }{ 'ef' : "ab" }`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET /test HTTP/1.1" 200`))
+		})
+	})
+
 	Context("with no specified pid", func() {
 		BeforeEach(func() {
 			app = cutlass.New(filepath.Join(bpDir, "fixtures", "without_pid"))
@@ -52,7 +67,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Uses latest mainline nginx", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`No nginx version specified - using mainline => 1.15.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`No nginx version specified - using mainline => 1.17.`))
 			Eventually(app.Stdout.String).ShouldNot(ContainSubstring(`Requested nginx version:`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
@@ -68,7 +83,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Logs nginx buildpack version", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: mainline => 1.15.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: mainline => 1.17.`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
 			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
@@ -83,23 +98,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Logs nginx buildpack version", func() {
 			PushAppAndConfirm(app)
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: stable => 1.14.`))
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Warning: usage of "stable" versions of NGINX is discouraged in most cases by the NGINX team.`))
-
-			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
-			Eventually(app.Stdout.String).Should(ContainSubstring(`NginxLog "GET / HTTP/1.1" 200`))
-		})
-	})
-
-	Context("with an nginx app specifying 1.14.x", func() {
-		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "1_14_x"))
-		})
-
-		It("Logs nginx buildpack version", func() {
-			PushAppAndConfirm(app)
-
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: 1.14.x => 1.14.`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Requested nginx version: stable => 1.16.`))
 			Eventually(app.Stdout.String).Should(ContainSubstring(`Warning: usage of "stable" versions of NGINX is discouraged in most cases by the NGINX team.`))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Exciting Content"))
@@ -115,7 +114,7 @@ var _ = Describe("CF Nginx Buildpack", func() {
 		It("Logs nginx buildpack versions", func() {
 			Expect(app.Push()).ToNot(Succeed())
 
-			Eventually(app.Stdout.String).Should(ContainSubstring(`Available versions: mainline, stable, 1.14.x, 1.15.x`))
+			Eventually(app.Stdout.String).Should(ContainSubstring(`Available versions: mainline, stable, 1.16.x, 1.17.x`))
 		})
 	})
 

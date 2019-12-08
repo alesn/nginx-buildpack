@@ -1,3 +1,104 @@
+v1.1.2 Nov 25, 2019
+====================
+
+* Add nginx 1.17.6, remove nginx 1.17.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/169841587)
+
+
+v1.1.1 Oct 31, 2019
+====================
+
+* Add nginx 1.17.5, remove nginx 1.17.4
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/169293603)
+
+
+v1.1.0 Oct 10, 2019
+=====================
+
+* Remove cflinuxfs2 dependencies.
+  Fixes #20
+  (https://www.pivotaltracker.com/story/show/166710438)
+
+* Add nginx 1.17.4, remove nginx 1.17.3
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168729879)
+
+* Update nginx conf templating to use two passes
+  - one for plaintext variable defined in buildpack.yml
+  - one for everything else, which will be html escaped
+  (https://www.pivotaltracker.com/story/show/165884664)
+
+
+v1.0.18 Sep 05, 2019
+=====================
+
+* Add openresty 1.15.8.2, remove openresty 1.15.8.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168196518)
+
+
+v1.0.17 Aug 27, 2019
+=====================
+
+* Add nginx 1.17.3, remove nginx 1.17.2
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168149045)
+
+
+* Add nginx 1.16.1, remove nginx 1.16.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168149237)
+
+
+v1.0.16 Aug 06, 2019
+=====================
+
+* Add nginx 1.17.2, remove nginx 1.17.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/167455436)
+
+v1.0.15 Jul 11, 2019
+=====================
+
+* Merge pull request #12 from i6e/cf-internal-domains-resolver
+  (https://www.pivotaltracker.com/story/show/163430800)
+
+
+v1.0.14 Jun 27, 2019
+=====================
+
+* Change default version of nginx to 1.17 and remove 1.15 deprecation date
+  (https://www.pivotaltracker.com/story/show/166900672)
+
+* Add nginx 1.17.1, remove nginx 1.15.12, 1.17.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/166900672)
+
+* Rebuild nginx 1.16.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/165611882)
+
+* Rebuild nginx 1.17.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/166292410)
+
+
+v1.0.13 Jun 05, 2019
+=====================
+
+* Change default nginx version to 1.15.x
+  (https://www.pivotaltracker.com/story/show/166292306)
+
+* Add openresty 1.15.8.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/166292623)
+
+* Add nginx 1.17.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/166292410)
+
 v1.0.12 May 03, 2019
 =====================
 
