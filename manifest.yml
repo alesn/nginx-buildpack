@@ -16,6 +16,10 @@ dependency_deprecation_dates:
   name: nginx
   date: 2020-06-01
   link: https://nginx.org/
+- version_line: 1.18.x-with-geoip
+  name: nginx
+  date: 2020-06-01
+  link: https://nginx.org/
 dependencies:
 - name: nginx
   version: 1.18.0-with-geoip
