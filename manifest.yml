@@ -2,7 +2,7 @@
 language: nginx
 default_versions:
 - name: nginx
-  stable: 1.18.0-with-geoip
+  version: 1.18.0-with-geoip
 dependency_deprecation_dates:
 - version_line: 1.16.x
   name: nginx
