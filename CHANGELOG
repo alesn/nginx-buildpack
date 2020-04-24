@@ -1,3 +1,57 @@
+v1.1.8 Apr 22, 2020
+====================
+
+* Add nginx 1.17.10, remove nginx 1.17.9
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172313699)
+
+v1.1.7 Apr 02, 2020
+====================
+
+* Add openresty 1.15.8.3, remove openresty 1.15.8.2
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172004504)
+
+
+v1.1.6 Mar 09, 2020
+====================
+
+* Add nginx 1.17.9, remove nginx 1.17.8
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/171603145)
+
+* {{nameservers}} parameters fix
+  (https://www.pivotaltracker.com/story/show/171310706)
+
+
+v1.1.5 Feb 03, 2020
+====================
+
+* Add nginx 1.17.8, remove nginx 1.17.7
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170822201)
+
+
+v1.1.4 Jan 15, 2020
+====================
+
+* Rebuild nginx 1.17.7
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170441392)
+
+* Rebuild nginx 1.16.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168936679)
+
+
+v1.1.3 Jan 03, 2020
+====================
+
+* Add nginx 1.17.7, remove nginx 1.17.6
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170441392)
+
+
 v1.1.2 Nov 25, 2019
 ====================
 
