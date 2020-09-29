@@ -40,6 +40,14 @@ dependencies:
   - cflinuxfs3
   source: http://nginx.org/download/nginx-1.19.2.tar.gz
   source_sha256: 7c1f7bb13e79433ee930c597d272a64bc6e30c356a48524f38fd34fa88d62473
+- name: nginx
+  version: 1.19.3-with-geoip
+  uri: https://github.com/alesn/nginx-buildpack/raw/master/dependencies/nginx-with-geoip-1.19.3-linux-x64.tgz
+  sha256: 60d1556dbf271ea33af52896f0d3037e62171ab91bd40146dae52a0a8c5049fe
+  cf_stacks:
+  - cflinuxfs3
+  source: http://nginx.org/download/nginx-1.19.3.tar.gz
+  source_sha256: 91e5b74fa17879d2463294e93ad8f6ffc066696ae32ad0478ffe15ba0e9e8df0
 - name: openresty
   version: 1.13.6.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/openresty/openresty-1.13.6.2-linux-x64-cflinuxfs3-f1df4777.tgz
