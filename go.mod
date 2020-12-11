@@ -1,13 +1,13 @@
 module github.com/cloudfoundry/nginx-buildpack
 
 require (
-	github.com/cloudfoundry/libbuildpack v0.0.0-20200814132208-182c59184db4
+	github.com/cloudfoundry/libbuildpack v0.0.0-20201130181046-de3cef0029bc
 	github.com/golang/mock v1.4.4
 	github.com/miekg/dns v1.1.15
-	github.com/onsi/ginkgo v1.14.0
-	github.com/onsi/gomega v1.10.1
-	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5 // indirect
-	golang.org/x/sys v0.0.0-20200824131525-c12d262b63d8 // indirect
+	github.com/nxadm/tail v1.4.5 // indirect
+	github.com/onsi/ginkgo v1.14.2
+	github.com/onsi/gomega v1.10.3
+	golang.org/x/sys v0.0.0-20201130171929-760e229fe7c5 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )
 
